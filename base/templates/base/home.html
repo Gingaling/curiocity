@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr; 
+    }
+</style>
+
+<div class="home-container">
+
+    <div>
+        <h1>Browse Topics </h1>
+        <hr>
+
+        <div>
+            <a href="{% url 'home' %}">All</a>
+        </div>
+
+        {% for topic in topics %}
+            <div>
+                <a href="{% url 'home' %}?q={{topic.name}}" >{{topic.name}}</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <a href="{% url 'create-room' %}">Create Room</a>
+        {% if room_count == 1 %}
+            <h5>{{room_count}} room can be found</h5>
+        {% else %}
+            <h5>{{room_count}} rooms can be found</h5>
+        {% endif %}
+        <hr>
+        <div>
+            {% for room in rooms %}
+            <div>
+                <span>@{{room.host.username}}</span>
+                <h5>{{room.id}} -- <a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
+                <a href="{% url 'update-room' room.id %}">Edit Room</a>
+                <a href="{% url 'delete-room' room.id %}">Delete Room</a>
+                <br></br>
+                <small>{{room.topic.name}}</small>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br></br><br></br>
+</div>
+
+<div class = "home-container">
+
+    <div>
+        <h1>Home Template</h1>
+        <hr>
+    </div>
+    <div>
+        <a href="{% url 'create-room' %}">Create Room</a>
+        <<hr>
+        <div>
+            {% for room in rooms %}
+            <div>
+                <span>@{{room.host.username}}</span>
+                <h5>{{room.id}} -- <a href="{% url 'room' room.id %}">{{room.name}}</a></h5>
+                <a href="{% url 'update-room' room.id %}">Edit Room</a>
+                <a href="{% url 'delete-room' room.id %}">Delete Room</a>
+                <br></br>
+                <small>{{room.topic.name}}</small>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br></br><br></br>
+
+
+{% endblock content %}
